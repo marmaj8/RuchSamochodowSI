@@ -1,0 +1,15 @@
+C:\Users\Marcin\source\repos\RuchSamochodowSI\RuchSamochodowSI\bin\Debug\RuchSamochodowSI.exe.config
+C:\Users\Marcin\source\repos\RuchSamochodowSI\RuchSamochodowSI\bin\Debug\RuchSamochodowSI.exe
+C:\Users\Marcin\source\repos\RuchSamochodowSI\RuchSamochodowSI\bin\Debug\RuchSamochodowSI.pdb
+C:\Users\Marcin\source\repos\RuchSamochodowSI\RuchSamochodowSI\obj\Debug\RuchSamochodowSI.csprojAssemblyReference.cache
+C:\Users\Marcin\source\repos\RuchSamochodowSI\RuchSamochodowSI\obj\Debug\MainWindow.g.cs
+C:\Users\Marcin\source\repos\RuchSamochodowSI\RuchSamochodowSI\obj\Debug\App.g.cs
+C:\Users\Marcin\source\repos\RuchSamochodowSI\RuchSamochodowSI\obj\Debug\RuchSamochodowSI_MarkupCompile.cache
+C:\Users\Marcin\source\repos\RuchSamochodowSI\RuchSamochodowSI\obj\Debug\RuchSamochodowSI_MarkupCompile.lref
+C:\Users\Marcin\source\repos\RuchSamochodowSI\RuchSamochodowSI\obj\Debug\MainWindow.baml
+C:\Users\Marcin\source\repos\RuchSamochodowSI\RuchSamochodowSI\obj\Debug\RuchSamochodowSI.g.resources
+C:\Users\Marcin\source\repos\RuchSamochodowSI\RuchSamochodowSI\obj\Debug\RuchSamochodowSI.Properties.Resources.resources
+C:\Users\Marcin\source\repos\RuchSamochodowSI\RuchSamochodowSI\obj\Debug\RuchSamochodowSI.csproj.GenerateResource.cache
+C:\Users\Marcin\source\repos\RuchSamochodowSI\RuchSamochodowSI\obj\Debug\RuchSamochodowSI.csproj.CoreCompileInputs.cache
+C:\Users\Marcin\source\repos\RuchSamochodowSI\RuchSamochodowSI\obj\Debug\RuchSamochodowSI.exe
+C:\Users\Marcin\source\repos\RuchSamochodowSI\RuchSamochodowSI\obj\Debug\RuchSamochodowSI.pdb
