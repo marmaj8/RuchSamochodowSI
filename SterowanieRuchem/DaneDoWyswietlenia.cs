@@ -16,6 +16,8 @@ namespace SterowanieRuchem
         public double[] srednie { get; set; }
         public double[] kontrolne { get; set; }
 
+        public Boolean MozliwePrzestawianie { get; set; }
+
         public DaneDoWyswietlenia(int poczatek, int koniec, Boolean si = false)
         {
             srednie = new double[24];
@@ -24,6 +26,7 @@ namespace SterowanieRuchem
             this.Poczatek = poczatek;
             this.Koniec = koniec;
             this.SI = si;
+            this.MozliwePrzestawianie = true;
         }
 
         public void UstawSrednia(double srednia, int godzina, Boolean czyKontrolne)

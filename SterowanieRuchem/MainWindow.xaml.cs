@@ -41,11 +41,52 @@ namespace SterowanieRuchem
 
         private void Button_Start(object sender, RoutedEventArgs e)
         {
+            btnStart.IsEnabled = false;
+            btnStop.IsEnabled = true;
+            btnKrok.IsEnabled = false;
+            btnWczytajMape.IsEnabled = false;
+            btnWczytajSi.IsEnabled = false;
+            btnZapiszSi.IsEnabled = false;
+            chboxTryb.IsEnabled = false;
+            
+            foreach(DaneDoWyswietlenia d in dane)
+            {
+                d.MozliwePrzestawianie = false;
+            }
+            wyniki.ItemsSource = dane;
+            wyniki.Items.Refresh();
 
+
+            /*
+             * TO DO
+             * TO DO
+             * TO DO
+             * TO DO
+             */
         }
         private void Button_Stop(object sender, RoutedEventArgs e)
         {
+            /*
+             * TO DO
+             * TO DO
+             * TO DO
+             * TO DO
+             */
 
+            btnStart.IsEnabled = true;
+            btnStop.IsEnabled = false;
+            btnKrok.IsEnabled = true;
+            btnWczytajMape.IsEnabled = true;
+            btnWczytajSi.IsEnabled = true;
+            btnZapiszSi.IsEnabled = true;
+            chboxTryb.IsEnabled = true;
+
+            foreach (DaneDoWyswietlenia d in dane)
+            {
+                d.MozliwePrzestawianie = true;
+            }
+            wyniki.ItemsSource = dane;
+            wyniki.Items.Refresh();
         }
         private void Button_Krok(object sender, RoutedEventArgs e)
         {
@@ -63,6 +104,7 @@ namespace SterowanieRuchem
         private void Button_Wczytaj_Mape(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Mapy Skrzyżowań (*.jsonMap)|*.jsonMap|All files (*.*)|*.*";
             if (openFileDialog.ShowDialog() == true)
             {
                 emul.ZaladujMapeZPliku(openFileDialog.FileName);
@@ -75,6 +117,7 @@ namespace SterowanieRuchem
         private void Button_Wczytaj_Si(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Sieci Neuronowe (*.nnsi)|*.nnsi|All files (*.*)|*.*";
             if (openFileDialog.ShowDialog() == true)
             {
                 emul.ZaladujSi(openFileDialog.FileName);
@@ -83,10 +126,11 @@ namespace SterowanieRuchem
 
         private void Button_Zapisz_Si(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            if (openFileDialog.ShowDialog() == true)
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Sieci Neuronowe (*.nnsi)|*.nnsi";
+            if (saveFileDialog.ShowDialog() == true)
             {
-                emul.ZapiszSi(openFileDialog.FileName);
+                emul.ZapiszSi(saveFileDialog.FileName);
             }
         }
 

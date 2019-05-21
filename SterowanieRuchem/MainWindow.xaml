@@ -17,7 +17,7 @@
                     <GridViewColumn Header="SI" >
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <CheckBox Checked="SI_Check" Unchecked="SI_UnCheck" Tag="{Binding Koniec}" IsChecked="{Binding SI}"/>
+                                <CheckBox IsEnabled="{Binding MozliwePrzestawianie}" Checked="SI_Check" Unchecked="SI_UnCheck" Tag="{Binding Koniec}" IsChecked="{Binding SI}"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -96,13 +96,15 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button Name="btnKrok"  Content="Krok" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75" Click="Button_Krok"/>
-        <Label Name ="lbPojazdow" Content="Pojazdow: 0" HorizontalAlignment="Left" Margin="90,10,0,0" VerticalAlignment="Top" Width="138"/>
-        <Button Content="Wczytaj Mape" HorizontalAlignment="Left" Margin="10,32,0,0" VerticalAlignment="Top" Width="75" Click="Button_Wczytaj_Mape"/>
-        <Button Content="Wczytaj SI" HorizontalAlignment="Left" Margin="10,32,0,0" VerticalAlignment="Top" Width="75" Click="Button_Wczytaj_Si"/>
-        <Button Content="Zapisz SI" HorizontalAlignment="Left" Margin="10,32,0,0" VerticalAlignment="Top" Width="75" Click="Button_Zapisz_Si"/>
+        <Button Name="btnKrok"  Content="Krok" HorizontalAlignment="Left" Margin="10,32,0,0" VerticalAlignment="Top" Width="75" Click="Button_Krok"/>
+        <Label Name ="lbPojazdow" Content="Pojazdow: 0" HorizontalAlignment="Left" Margin="471,5,0,0" VerticalAlignment="Top" Width="138"/>
+        <Button Name="btnWczytajMape" Content="Wczytaj Mape" HorizontalAlignment="Left" Margin="501,32,0,0" VerticalAlignment="Top" Width="75" Click="Button_Wczytaj_Mape"/>
+        <Button Name="btnWczytajSi" Content="Wczytaj SI" HorizontalAlignment="Right" Margin="0,32,665,0" VerticalAlignment="Top" Width="75" Click="Button_Wczytaj_Si"/>
+        <Button Name="btnZapiszSi" Content="Zapisz SI" HorizontalAlignment="Left" Margin="421,32,0,0" VerticalAlignment="Top" Width="75" Click="Button_Zapisz_Si"/>
+        <Button Name="btnStart" Content="Start" HorizontalAlignment="Left" Margin="90,32,0,0" VerticalAlignment="Top" Width="75" Click="Button_Start" RenderTransformOrigin="-5.227,-5.364"/>
+        <Button Name="btnStop" Content="Stop" HorizontalAlignment="Left" Margin="170,32,0,0" VerticalAlignment="Top" Width="75" Click="Button_Stop"/>
 
 
-        <CheckBox Content="Symulacja Kontrolna" Checked="Tryb_Kontrolny_Check" Unchecked="Tryb_Kontrolny_Uncheck" IsChecked="True"/>
+        <CheckBox Name="chboxTryb" Content="Symulacja Kontrolna" HorizontalAlignment="Left" Margin="341,10,0,0" VerticalAlignment="Top" Checked="Tryb_Kontrolny_Check" Unchecked="Tryb_Kontrolny_Uncheck" IsChecked="True"/>
     </Grid>
 </Window>
