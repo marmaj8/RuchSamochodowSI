@@ -19,9 +19,10 @@ namespace SterowanieRuchem
      */
     class SchematSwiatel
     {
-        List<int> pozycje;
-        List<int> dlugosci;
+        public List<int> pozycje { get; set; }
+        public List<int> dlugosci { get; set; }
 
+        public SchematSwiatel() { }
         public SchematSwiatel(List<int> pozycje, List<int> dlugosci)
         {
             this.pozycje = pozycje;

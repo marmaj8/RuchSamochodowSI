@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -38,7 +39,15 @@ namespace SterowanieRuchem
             wyniki.ItemsSource = dane;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Button_Start(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void Button_Stop(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void Button_Krok(object sender, RoutedEventArgs e)
         {
             emul.EmulacjaGodziny();
             //List<DaneDoWyswietlenia> dane = emul.PrzygotujDaneDoWyswieltenia();
@@ -51,15 +60,34 @@ namespace SterowanieRuchem
 
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void Button_Wczytaj_Mape(object sender, RoutedEventArgs e)
         {
-            for (int i = 0; i < 24; i++)
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            if (openFileDialog.ShowDialog() == true)
             {
-                emul.EmulacjaGodziny();
+                emul.ZaladujMapeZPliku(openFileDialog.FileName);
+                dane = emul.PrzygotujDaneDoWyswieltenia();
+                wyniki.ItemsSource = dane;
+                wyniki.Items.Refresh();
             }
-            List<DaneDoWyswietlenia> dane = emul.PrzygotujDaneDoWyswieltenia();
-            wyniki.ItemsSource = dane;
-            lbPojazdow.Content = "Pojazdow: " + Pojazd.nastepnaRejestracja;
+        }
+
+        private void Button_Wczytaj_Si(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            if (openFileDialog.ShowDialog() == true)
+            {
+                emul.ZaladujSi(openFileDialog.FileName);
+            }
+        }
+
+        private void Button_Zapisz_Si(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            if (openFileDialog.ShowDialog() == true)
+            {
+                emul.ZapiszSi(openFileDialog.FileName);
+            }
         }
 
         private void SI_Check(object sender, RoutedEventArgs e)
@@ -90,6 +118,16 @@ namespace SterowanieRuchem
             }
             emul.WylaczSi(koniec);
             wyniki.Items.Refresh();
+        }
+
+        private void Tryb_Kontrolny_Check(object sender, RoutedEventArgs e)
+        {
+            emul.UstawTryb(0);
+        }
+
+        private void Tryb_Kontrolny_Uncheck(object sender, RoutedEventArgs e)
+        {
+            emul.UstawTryb(1);
         }
     }
 }

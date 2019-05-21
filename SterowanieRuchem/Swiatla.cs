@@ -12,14 +12,15 @@ namespace SterowanieRuchem
      */
     class Swiatla
     {
-        SchematSwiatel schemat;
-        SchematSwiatel schematSi;
-        Boolean sterowanieSI;
+        public SchematSwiatel schemat { get; set; }
+        public SchematSwiatel schematSi { get; set; }
+        public Boolean sterowanieSI { get; set; }
 
-        int pozycjaWSchemacie;
-        int pozycja;                // nr pozycji swiatel [0-5]
-        public int[] odZmiany { get; }     // ile sekund minelo od zmiany na tą pozycje swiatel
+        public int pozycjaWSchemacie { get; set; }
+        public int pozycja { get; set; }                 // nr pozycji swiatel [0-5]
+        public int[] odZmiany { get; set; }     // ile sekund minelo od zmiany na tą pozycje swiatel
 
+        public Swiatla() { }
         public Swiatla(SchematSwiatel schemat)
         {
             this.schemat = schemat;
@@ -27,6 +28,18 @@ namespace SterowanieRuchem
             pozycjaWSchemacie = 0;
             odZmiany = new int[] { 0, 0, 0, 0, 0, 0 };
             sterowanieSI = false;
+            schematSi = null;
+        }
+        public Swiatla(Swiatla sw)
+        {
+            this.schemat = sw.schemat;
+            this.sterowanieSI = false;
+            this.pozycjaWSchemacie = sw.pozycjaWSchemacie;
+            this.pozycja = sw.pozycja;
+
+            this.odZmiany = new int[sw.odZmiany.Length];
+            sw.odZmiany.CopyTo(this.odZmiany, 0);
+            schematSi = null;
         }
 
         public void WylaczSi()

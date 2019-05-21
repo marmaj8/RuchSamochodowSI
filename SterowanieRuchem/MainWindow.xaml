@@ -96,9 +96,13 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button Name="btnKrok"  Content="Krok" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
+        <Button Name="btnKrok"  Content="Krok" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75" Click="Button_Krok"/>
         <Label Name ="lbPojazdow" Content="Pojazdow: 0" HorizontalAlignment="Left" Margin="90,10,0,0" VerticalAlignment="Top" Width="138"/>
-        <Button Content="Dzien" HorizontalAlignment="Left" Margin="10,32,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_1"/>
+        <Button Content="Wczytaj Mape" HorizontalAlignment="Left" Margin="10,32,0,0" VerticalAlignment="Top" Width="75" Click="Button_Wczytaj_Mape"/>
+        <Button Content="Wczytaj SI" HorizontalAlignment="Left" Margin="10,32,0,0" VerticalAlignment="Top" Width="75" Click="Button_Wczytaj_Si"/>
+        <Button Content="Zapisz SI" HorizontalAlignment="Left" Margin="10,32,0,0" VerticalAlignment="Top" Width="75" Click="Button_Zapisz_Si"/>
 
+
+        <CheckBox Content="Symulacja Kontrolna" Checked="Tryb_Kontrolny_Check" Unchecked="Tryb_Kontrolny_Uncheck" IsChecked="True"/>
     </Grid>
 </Window>

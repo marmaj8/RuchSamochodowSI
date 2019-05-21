@@ -12,18 +12,19 @@ namespace SterowanieRuchem
      */
     class PasRuchu
     {
-        double waga;
-        double czasPrzejazdu;
+        public double waga { get; set; }
+        public double czasPrzejazdu { get; set; }
 
-        int zrodlo;
-        int zrodloSkrzyzowanaia;
-        List<int> kierunki;
-        List<int> kierunkiSkrzyzowania;
+        public int zrodlo { get; set; }
+        public int zrodloSkrzyzowanaia { get; set; }
+        public List<int> kierunki { get; set; }
+        public List<int> kierunkiSkrzyzowania { get; set; }
 
-        int miejesca;
+        public int miejesca { get; set; }
 
-        Queue<Pojazd> pojazdy;
+        public Queue<Pojazd> pojazdy { get; set; }
 
+        public PasRuchu() { }
         public PasRuchu(double waga, double czas, int zrodlo, int zrodloSkrzyzowanaia, List<int> kierunki, List<int> kierunkiSkrzyzowania, int miejsca)
         {
             pojazdy = new Queue<Pojazd>();
@@ -35,6 +36,19 @@ namespace SterowanieRuchem
             this.kierunki = kierunki;
             this.kierunkiSkrzyzowania = kierunkiSkrzyzowania;
             this.miejesca = miejsca;
+        }
+
+        public PasRuchu(PasRuchu pas)
+        {
+            this.waga = pas.waga;
+            this.czasPrzejazdu = pas.czasPrzejazdu;
+            this.zrodlo = pas.zrodlo;
+            this.zrodloSkrzyzowanaia = pas.zrodloSkrzyzowanaia;
+            this.kierunki = pas.kierunki;
+            this.kierunkiSkrzyzowania = pas.kierunkiSkrzyzowania;
+            this.miejesca = pas.miejesca;
+
+            pojazdy = new Queue<Pojazd>();
         }
 
         public void DodajPojazd(Pojazd pojazd)

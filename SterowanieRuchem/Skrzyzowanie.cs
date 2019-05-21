@@ -14,19 +14,20 @@ namespace SterowanieRuchem
      */
     class Skrzyzowanie
     {
-        static int maxId;
-        int id;
-        List<PasRuchu> pasyRuchu;
-        Swiatla swiatla;
+        public static int maxId { get; set; }
+        public int id { get; set; }
+        public List<PasRuchu> pasyRuchu { get; set; }
+        public Swiatla swiatla { get; set; }
 
-        SchematRuchu generowany;
-        SchematRuchu usuwany;
+        public SchematRuchu generowany { get; set; }
+        public SchematRuchu usuwany { get; set; }
 
         public int PodajId()
         {
             return id;
         }
-        public Skrzyzowanie(int id, List<PasRuchu> pasy, Swiatla swiatla, SchematRuchu ruch, SchematRuchu usuwanyRuch, DaneORuchu bazaDanych)
+        public Skrzyzowanie() { }
+        public Skrzyzowanie(int id, List<PasRuchu> pasy, Swiatla swiatla, SchematRuchu ruch, SchematRuchu usuwanyRuch)
         {
             this.id = id;
             if (id > maxId)
@@ -43,6 +44,21 @@ namespace SterowanieRuchem
                     zrodlo = pas.Zrodlo();
             }
         }
+
+        public Skrzyzowanie(Skrzyzowanie sk)
+        {
+            this.id = sk.id;
+            this.pasyRuchu = new List<PasRuchu>();
+            foreach(PasRuchu pas in sk.pasyRuchu)
+            {
+                this.pasyRuchu.Add(new PasRuchu(pas));
+            }
+
+            this.swiatla = new Swiatla(sk.swiatla);
+            this.generowany = sk.generowany;
+            this.usuwany = sk.usuwany;
+        }
+
         public void SymulujRuch()
         {
             swiatla.Swiec(1);

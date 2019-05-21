@@ -8,15 +8,22 @@ namespace SterowanieRuchem
 {
     class Mapa
     {
-        List<Skrzyzowanie> skrzyzowania;
-        DaneORuchu bazaDanych;
+        public List<Skrzyzowanie> skrzyzowania { get; set; }
 
-        public Mapa(DaneORuchu bazaDanych)
+        public Mapa()
         {
             skrzyzowania = new List<Skrzyzowanie>();
-            this.bazaDanych = bazaDanych;
-
         }
+
+        public Mapa(Mapa mapa)
+        {
+            skrzyzowania = new List<Skrzyzowanie>();
+            foreach ( Skrzyzowanie sk in mapa.skrzyzowania)
+            {
+                skrzyzowania.Add( new Skrzyzowanie(sk));
+            }
+        }
+        
         public void MapaTestowa()
         {
             Skrzyzowanie sk;
@@ -36,7 +43,7 @@ namespace SterowanieRuchem
                 new PasRuchu(2, 25, 7, 1, new List<int> { 9, 2}, new List<int> { 3, 0}, 20),
                 new PasRuchu(2, 28, 9, 3, new List<int> { 2, 7}, new List<int> { 0, 1}, 20),
             };
-            sk = new Skrzyzowanie(1, psy, sw, sr, sr, bazaDanych);
+            sk = new Skrzyzowanie(1, psy, sw, sr, sr);
             DodajSkrzyzowanie(sk);
 
 
@@ -50,7 +57,7 @@ namespace SterowanieRuchem
                 new PasRuchu(2, 27, 5, 1, new List<int> { 1, 6}, new List<int> { 3, 0}, 20),
                 new PasRuchu(2, 28, 1, 3, new List<int> { 6, 5}, new List<int> { 0, 1}, 20),
             };
-            sk = new Skrzyzowanie(7, psy, sw, sr, sr, bazaDanych);
+            sk = new Skrzyzowanie(7, psy, sw, sr, sr);
             DodajSkrzyzowanie(sk);
 
 
@@ -64,7 +71,7 @@ namespace SterowanieRuchem
                 new PasRuchu(2, 27, 9, 1, new List<int> { 7, 4}, new List<int> { 3, 0}, 20),
                 new PasRuchu(2, 25, 7, 3, new List<int> { 4, 9}, new List<int> { 0, 1}, 20),
             };
-            sk = new Skrzyzowanie(5, psy, sw, sr, sr, bazaDanych);
+            sk = new Skrzyzowanie(5, psy, sw, sr, sr);
             DodajSkrzyzowanie(sk);
 
 
@@ -78,7 +85,7 @@ namespace SterowanieRuchem
                 new PasRuchu(2, 27, 1, 1, new List<int> { 5, 8}, new List<int> { 3, 0}, 20),
                 new PasRuchu(2, 28, 5, 3, new List<int> { 8, 1}, new List<int> { 0, 1}, 20),
             };
-            sk = new Skrzyzowanie(9, psy, sw, sr, sr, bazaDanych);
+            sk = new Skrzyzowanie(9, psy, sw, sr, sr);
             DodajSkrzyzowanie(sk);
 
 
@@ -95,7 +102,7 @@ namespace SterowanieRuchem
                 new PasRuchu(1, 30, 3, 3, new List<int> { 6, 1, 8}, new List<int> { 3, 0, 1}, 20),
                 new PasRuchu(2, 27, 6, 3, new List<int> { 1, 8, 3}, new List<int> { 0, 1, 2}, 20),
             };
-            sk = new Skrzyzowanie(2, psy, sw, sr, sr, bazaDanych);
+            sk = new Skrzyzowanie(2, psy, sw, sr, sr);
             DodajSkrzyzowanie(sk);
 
 
@@ -110,7 +117,7 @@ namespace SterowanieRuchem
                 new PasRuchu(1, 32, 4, 3, new List<int> { 6, 2, 8}, new List<int> { 3, 0, 1}, 20),
                 new PasRuchu(1, 29, 6, 3, new List<int> { 2, 8, 3}, new List<int> { 0, 1, 2}, 20),
             };
-            sk = new Skrzyzowanie(3, psy, sw, sr, sr, bazaDanych);
+            sk = new Skrzyzowanie(3, psy, sw, sr, sr);
             DodajSkrzyzowanie(sk);
 
 
@@ -125,7 +132,7 @@ namespace SterowanieRuchem
                 new PasRuchu(1, 30, 5, 3, new List<int> { 6, 3, 8}, new List<int> { 3, 0, 1}, 20),
                 new PasRuchu(2, 25, 6, 3, new List<int> { 3, 8, 5}, new List<int> { 0, 1, 2}, 20),
             };
-            sk = new Skrzyzowanie(4, psy, sw, sr, sr, bazaDanych);
+            sk = new Skrzyzowanie(4, psy, sw, sr, sr);
             DodajSkrzyzowanie(sk);
 
 
@@ -140,7 +147,7 @@ namespace SterowanieRuchem
                 new PasRuchu(1, 25, 7, 3, new List<int> { 2, 3, 4}, new List<int> { 3, 0, 1}, 20),
                 new PasRuchu(2, 31, 2, 3, new List<int> { 3, 4, 7}, new List<int> { 0, 1, 2}, 20),
             };
-            sk = new Skrzyzowanie(6, psy, sw, sr, sr, bazaDanych);
+            sk = new Skrzyzowanie(6, psy, sw, sr, sr);
             DodajSkrzyzowanie(sk);
 
 
@@ -155,7 +162,7 @@ namespace SterowanieRuchem
                 new PasRuchu(1, 37, 3, 3, new List<int> { 2, 9, 4}, new List<int> { 3, 0, 1}, 20),
                 new PasRuchu(2, 15, 2, 3, new List<int> { 9, 4, 3}, new List<int> { 0, 1, 2}, 20),
             };
-            sk = new Skrzyzowanie(8, psy, sw, sr, sr, bazaDanych);
+            sk = new Skrzyzowanie(8, psy, sw, sr, sr);
             DodajSkrzyzowanie(sk);
         }
 

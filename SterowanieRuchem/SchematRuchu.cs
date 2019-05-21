@@ -12,8 +12,8 @@ namespace SterowanieRuchem
      */
     class SchematRuchu
     {
-        List<int> ruch;
-
+        public List<int> ruch { get; set; }
+        
         public SchematRuchu(List<int> ruch)
         {
             if (ruch.Count() != 24)
@@ -30,7 +30,7 @@ namespace SterowanieRuchem
                 this.ruch.Add(ruch);
             }
         }
-        public SchematRuchu() : this(0)
+        public SchematRuchu()
         {
 
         }
