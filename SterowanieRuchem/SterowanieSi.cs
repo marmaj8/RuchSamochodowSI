@@ -828,7 +828,7 @@ namespace SterowanieRuchem
                                 nrSasiadaSkrzyzowania * 4 + nrDrogiSkrzyzowania,
                                 sa.CzasDojazdu(zr),
                                 baza.PodajSredniCzas(zr, saId),
-                                baza.PodajIlePojazdowWgodzine(zr, saId)
+                                baza.PodajIlePojazdowWgodzine(zr, saId, czas.godzin)
                                 );
                         }
                         nrDrogiSkrzyzowania++;
@@ -880,6 +880,39 @@ namespace SterowanieRuchem
             return schemat;
             
                 //return new SchematSwiatel(new List<int> { }, new List<int> { });
+        }
+
+
+        public void UczZKontrolnymi(DaneORuchu bazaKontrolna, Czas czas)
+        {
+            List<double[]> wejscie = new List<double[]>();
+            List<double[]> wyjscie = new List<double[]>();
+
+            foreach (ZestawDanychSieci zestaw in zestawyUczace)
+            {
+                zestaw.SprawdxPoprawnosc(
+                    bazaKontrolna.PodajSumeSrednichSkrzyzowania(zestaw.NrSkrzyzowania, czas)
+                   );
+                wejscie.Add(zestaw.TablicaWejscia());
+                wyjscie.Add(zestaw.TablicaWyjscia());
+            }
+            ewolutor.RunEpoch(wejscie.ToArray(), wyjscie.ToArray());
+        }
+
+        public void UczZPoprzedniaDoba(DaneORuchu baza)
+        {
+            List<double[]> wejscie = new List<double[]>();
+            List<double[]> wyjscie = new List<double[]>();
+
+            foreach (ZestawDanychSieci zestaw in zestawyUczace)
+            {
+                zestaw.SprawdxPoprawnosc(
+                    baza.PodajSumeSrednichSkrzyzowania(zestaw.NrSkrzyzowania)
+                   );
+                wejscie.Add(zestaw.TablicaWejscia());
+                wyjscie.Add(zestaw.TablicaWyjscia());
+            }
+            ewolutor.RunEpoch(wejscie.ToArray(), wyjscie.ToArray());
         }
     }
 }

@@ -42,10 +42,10 @@ namespace SterowanieRuchem
         public void Symuluj()
         {
             List<Pojazd> doUsuniecia = new List<Pojazd>();
-            /*
+            
             if (!czyKontrolne)
                 mapa.UstawNoweSchematySi(bazaDanych, bazaDanychKontrolna, si, czas);
-                */
+                
             mapa.RuchSkrzyzowan();
 
             foreach (Pojazd pojazd in pojazdy)
@@ -78,11 +78,13 @@ namespace SterowanieRuchem
 
         public void WylaczSi(int id)
         {
-            mapa.WylaczSi(id);
+            if (!czyKontrolne)
+                mapa.WylaczSi(id);
         }
         public void WlaczSi(int id)
         {
-            mapa.UstawSi(id, bazaDanych, bazaDanychKontrolna, si, czas);
+            if (!czyKontrolne)
+                mapa.UstawSi(id, bazaDanych, bazaDanychKontrolna, si, czas);
         }
     }
 }

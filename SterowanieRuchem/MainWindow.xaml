@@ -9,7 +9,7 @@
     <Grid Margin="10,0">
         <ListView Name ="wyniki" Height="Auto" Width="Auto" Margin="10,59,10,0" VerticalAlignment="Top">
             <ListView.View>
-                <GridView>
+                <GridView x:Name="tabela">
                     <GridViewColumn Header="s" Width="20" DisplayMemberBinding="{Binding Poczatek}" />
                     <GridViewColumn Header="" Width="25" DisplayMemberBinding="{Binding Kierunek}" />
                     <GridViewColumn Header="k" Width="20" DisplayMemberBinding="{Binding Koniec}" />

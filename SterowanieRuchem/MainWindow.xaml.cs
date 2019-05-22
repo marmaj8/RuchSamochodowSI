@@ -2,8 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -24,11 +26,15 @@ namespace SterowanieRuchem
     {
         Emulator emul;
         List<DaneDoWyswietlenia> dane;
+        BackgroundWorker wTle;
+        Boolean pracuj;
+        Boolean zmieniono;
+        int kolumna;
 
         public MainWindow()
         {
             emul = new Emulator();
-            emul.UstawTryb(1);
+            emul.UstawTrybKontrolny(true);
             emul.EmulatorTestowy();
 
             //List<DaneDoWyswietlenia> dane = emul.PrzygotujDaneDoWyswieltenia();
@@ -37,6 +43,18 @@ namespace SterowanieRuchem
             InitializeComponent();
 
             wyniki.ItemsSource = dane;
+
+
+            kolumna = 0;
+            pracuj = false;
+            zmieniono = false;
+
+            wTle = new BackgroundWorker();
+            wTle.DoWork += new DoWorkEventHandler(wTle_DoWork);
+            wTle.ProgressChanged += new ProgressChangedEventHandler(wTle_ProgressChanged);
+            wTle.WorkerReportsProgress = true;
+            
+            wTle.RunWorkerAsync();
         }
 
         private void Button_Start(object sender, RoutedEventArgs e)
@@ -55,38 +73,12 @@ namespace SterowanieRuchem
             }
             wyniki.ItemsSource = dane;
             wyniki.Items.Refresh();
-
-
-            /*
-             * TO DO
-             * TO DO
-             * TO DO
-             * TO DO
-             */
+            
+            pracuj = true;
         }
         private void Button_Stop(object sender, RoutedEventArgs e)
         {
-            /*
-             * TO DO
-             * TO DO
-             * TO DO
-             * TO DO
-             */
-
-            btnStart.IsEnabled = true;
-            btnStop.IsEnabled = false;
-            btnKrok.IsEnabled = true;
-            btnWczytajMape.IsEnabled = true;
-            btnWczytajSi.IsEnabled = true;
-            btnZapiszSi.IsEnabled = true;
-            chboxTryb.IsEnabled = true;
-
-            foreach (DaneDoWyswietlenia d in dane)
-            {
-                d.MozliwePrzestawianie = true;
-            }
-            wyniki.ItemsSource = dane;
-            wyniki.Items.Refresh();
+            pracuj = false;
         }
         private void Button_Krok(object sender, RoutedEventArgs e)
         {
@@ -97,8 +89,9 @@ namespace SterowanieRuchem
             wyniki.ItemsSource = dane;
             wyniki.Items.Refresh();
 
-            lbPojazdow.Content = "Pojazdow: " + Pojazd.nastepnaRejestracja;
+            ZmienKolumne();
 
+            lbPojazdow.Content = "Pojazdow: " + Pojazd.nastepnaRejestracja;
         }
 
         private void Button_Wczytaj_Mape(object sender, RoutedEventArgs e)
@@ -112,6 +105,7 @@ namespace SterowanieRuchem
                 wyniki.ItemsSource = dane;
                 wyniki.Items.Refresh();
             }
+            kolumna = 0;
         }
 
         private void Button_Wczytaj_Si(object sender, RoutedEventArgs e)
@@ -166,12 +160,66 @@ namespace SterowanieRuchem
 
         private void Tryb_Kontrolny_Check(object sender, RoutedEventArgs e)
         {
-            emul.UstawTryb(0);
+            emul.UstawTrybKontrolny(true);
         }
 
         private void Tryb_Kontrolny_Uncheck(object sender, RoutedEventArgs e)
         {
-            emul.UstawTryb(1);
+            emul.UstawTrybKontrolny(false);
+        }
+
+
+        private void wTle_DoWork(object sender, DoWorkEventArgs e)
+        {
+            while(true)
+            {
+                if (pracuj)
+                {
+                    emul.EmulacjaGodziny();
+                    zmieniono = true;
+                }
+
+                wTle.ReportProgress(0);
+                Thread.Sleep(1000);
+            }
+        }
+
+        private void wTle_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            dane = emul.AktualizujDaneDoWyswieltenia(dane);
+
+            lbPojazdow.Content = "Pojazdow: " + Pojazd.nastepnaRejestracja;
+            if (!pracuj)
+            {
+                btnStart.IsEnabled = true;
+                btnStop.IsEnabled = false;
+                btnKrok.IsEnabled = true;
+                btnWczytajMape.IsEnabled = true;
+                btnWczytajSi.IsEnabled = true;
+                btnZapiszSi.IsEnabled = true;
+                chboxTryb.IsEnabled = true;
+
+                foreach (DaneDoWyswietlenia d in dane)
+                {
+                    d.MozliwePrzestawianie = true;
+                }
+                zmieniono = true;
+            }
+            if (zmieniono)
+            {
+                wyniki.ItemsSource = dane;
+                wyniki.Items.Refresh();
+
+                ZmienKolumne();
+                zmieniono = false;
+            }
+        }
+
+        // Podswietlenie kolumny
+        private void ZmienKolumne()
+        {
+            kolumna++;
+            kolumna = kolumna % 24;
         }
     }
 }

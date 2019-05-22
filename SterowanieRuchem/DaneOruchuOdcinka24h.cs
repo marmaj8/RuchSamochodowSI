@@ -20,6 +20,8 @@ namespace SterowanieRuchem
         public double[] srednie { get; }
         public int[] pojazdy { get; }
 
+        public double skasowanaSrednia { get; private set; }
+
         public DaneOruchuOdcinka24h(int poczatek, int koniec)
         {
             this.poczatek = poczatek;
@@ -27,6 +29,8 @@ namespace SterowanieRuchem
 
             this.srednie = new double[24];
             this.pojazdy = new int[24];
+
+            this.skasowanaSrednia = 0;
         }
         public void Aktualizuj(int godzina, double srednia, int ruch)
         {
@@ -34,6 +38,9 @@ namespace SterowanieRuchem
             godzina--;
             if (godzina == -1)
                 godzina = 23;
+
+            skasowanaSrednia = srednie[godzina];
+
             srednie[godzina] = srednia;
             pojazdy[godzina] = ruch;
         }

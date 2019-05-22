@@ -70,7 +70,10 @@ namespace SterowanieRuchem
         
         public static int RoznicaWSekundach(Czas t1, Czas t2)
         {
-            return t1.PodajWSekundach() - t2.PodajWSekundach();
+            int t = t1.PodajWSekundach() - t2.PodajWSekundach();
+            if (t < 0)
+                t += 24 * 60 * 60;
+            return t;
         }
     }
 }

@@ -95,6 +95,7 @@ namespace SterowanieRuchem
             {
                 suma -= u.PodajDlugoscPrzejazdu();
                 czasy.Remove(u);
+                
             }
 
         }

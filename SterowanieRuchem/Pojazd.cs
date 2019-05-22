@@ -79,7 +79,7 @@ namespace SterowanieRuchem
         {
             bazaDanych.ZajerejstrujZjazd(rejestracja, trasa.trasa[0], trasa.trasa[1]);
             bazaDanych.ZajerejstrujWjazd(rejestracja, trasa.trasa[1], trasa.trasa[2]);
-
+            
             trasa.SkasujPozycje();
             czasJazdy = 0;
 

@@ -30,7 +30,8 @@ namespace SterowanieRuchem
             this.rejerstracja = rejerstracja;
             this.czas = new Czas(t1);
 
-            dlugosc = t1.PodajWSekundach() - t2.PodajWSekundach();
+            //dlugosc = t1.PodajWSekundach() - t2.PodajWSekundach();
+            dlugosc = Czas.RoznicaWSekundach(t1, t2);
         }
 
         public Czas PodajGodzine()

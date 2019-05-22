@@ -23,7 +23,7 @@ namespace SterowanieRuchem
 
         public int Pojazdy { get; set; } = 0;   // laczna ilosc pojazdow wprowadzonych do ruchu
 
-        int tryb;       // 0 - z kontrolona / 1 - pojedyncza
+        Boolean trybKontrolny;              // true - 2 symulacje, false - 1 symulaja
 
         public Emulator()
         {
@@ -33,7 +33,7 @@ namespace SterowanieRuchem
             mapa = new Mapa();
             si = new SterowanieSi();
 
-            tryb = 0;
+            trybKontrolny = true;
         }
         
         // zaladowanie probnych ustawien emulatora
@@ -72,6 +72,8 @@ namespace SterowanieRuchem
             mapa.PrzekazListePolaczenDoBazy(daneORuchuKontrolne);
             si = new SterowanieSi();
         }
+
+        /*
         public void ZapiszMapeDoPliku(string plik)
         {
             using (StreamWriter file = File.CreateText(plik))
@@ -80,6 +82,7 @@ namespace SterowanieRuchem
                 serializer.Serialize(file, mapa);
             }
         }
+        */
 
         public void ZaladujSi(string plik)
         {
@@ -92,12 +95,9 @@ namespace SterowanieRuchem
         }
 
         // wybor trybu pracy emulatora
-        public void UstawTryb(int tryb)
+        public void UstawTrybKontrolny(Boolean tryb)
         {
-            if (tryb > 0)
-                tryb = 1;
-            else
-                tryb = 0;
+            trybKontrolny = tryb;
         }
         
         // emulacja ruchu trwajaca 1 godzine
@@ -107,7 +107,7 @@ namespace SterowanieRuchem
             
             while (czas.godzin == godzina)
             {
-                if (tryb == 0)
+                if (trybKontrolny)
                     kontrolna.Symuluj();
                 symulacja.Symuluj();
 
@@ -115,16 +115,23 @@ namespace SterowanieRuchem
                 foreach (Trasa trasa in trasy)
                 {
                     Pojazdy++;
-                    if (tryb == 0)
+                    if (trybKontrolny)
                         kontrolna.GenerujPojazd(trasa);
                     symulacja.GenerujPojazd(trasa);
                 }
                 daneORuchu.UsunStare();
+                daneORuchuKontrolne.UsunStare();
+
                 czas.UplywCzasu();
             }
 
             daneORuchu.ArchiwizujAktualne();
             daneORuchuKontrolne.ArchiwizujAktualne();
+
+            if (trybKontrolny)
+                si.UczZKontrolnymi(daneORuchuKontrolne, czas);
+            else
+                si.UczZPoprzedniaDoba(daneORuchu);
         }
 
         // przygotowanie modelu do wyswietlenia danych o zajerejstrowanym ruchu
@@ -136,14 +143,18 @@ namespace SterowanieRuchem
         // przygotowanie danych w modelu do wyswietlenia danych o zajerejstrowanym ruchu
         public List<DaneDoWyswietlenia> AktualizujDaneDoWyswieltenia(List<DaneDoWyswietlenia> dane)
         {
-            List<DaneDoWyswietlenia> wyswietl = daneORuchu.AktualizujDaneDoWyswieltenia(dane, false);
 
-            if (tryb == 0)
-                wyswietl = daneORuchuKontrolne.AktualizujDaneDoWyswieltenia(wyswietl, true);
+            if (trybKontrolny)
+            {
+                dane = daneORuchu.AktualizujDaneDoWyswieltenia(dane, false);
+                dane = daneORuchuKontrolne.AktualizujDaneDoWyswieltenia(dane, true);
+            }
             else
-                wyswietl = daneORuchu.AktualizujDaneDoWyswieltenia(wyswietl, false);
+            {
+                dane = daneORuchu.AktualizujDaneDoWyswieltenia(dane);
+            }
 
-            return wyswietl;
+            return dane;
             //return daneORuchuKontrolne.AktualizujDaneDoWyswieltenia(dane, true);
         }
 

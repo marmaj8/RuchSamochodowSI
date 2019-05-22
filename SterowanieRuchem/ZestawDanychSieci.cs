@@ -29,9 +29,9 @@ namespace SterowanieRuchem
 
         double sumaSrednichStarych;
 
-        public ZestawDanychSieci(int nrSkrzyzowania)
+        public ZestawDanychSieci(int nr)
         {
-            NrSkrzyzowania = nrSkrzyzowania;
+            NrSkrzyzowania = nr;
             idealneCzasy = new double[4];
             srednieCzasy = new double[4];
             srednieStareCzasy = new double[4];
@@ -85,7 +85,8 @@ namespace SterowanieRuchem
         {
             wyjscie.CopyTo(this.wyjscie, 0);
         }
-        public void ZanegujWyjscie()
+
+        private void ZanegujWyjscie()
         {
             double max = wyjscie.Max();
             for(int i =0; i < 6; i++)
@@ -96,7 +97,8 @@ namespace SterowanieRuchem
                     wyjscie[i] = 0.5;
             }
         }
-        public void WzmocnijWyjscie()
+
+        private void WzmocnijWyjscie()
         {
             double max = wyjscie.Max();
             for (int i = 0; i < 6; i++)
@@ -105,6 +107,9 @@ namespace SterowanieRuchem
                     wyjscie[i] = 1;
             }
         }
+
+        // Sprawdzenie czy dzialanie SI dalo dobry efekt
+        // i przeliczenie wyjscia w celu nauki
         public void SprawdxPoprawnosc(double srednia)
         {
             if (srednia <= sumaSrednichStarych)
@@ -112,6 +117,8 @@ namespace SterowanieRuchem
             else
                 ZanegujWyjscie();
         }
+
+        // Tablica danych wejsciowych do sieci neuronowej
         public double[] TablicaWejscia()
         {
             double[] tab = new double[86];
@@ -155,87 +162,14 @@ namespace SterowanieRuchem
 
             return tab;
         }
-        public double[] TablicaWejsciaXXXX()
-        {
-            double[] tab = new double[SterowanieSi.WIELKOSC_WEJSCIE];
-            
-            int j = 0;
-            for (int i = 0; i < 4; i++)
-            {
-                tab[j] = czyOczekujeLewo[i];
-                j++;
-                tab[j] = czyOczekujeProsto[i];
-                j++;
-                tab[j] = czyOczekujePrawo[i];
-                j++;
-            }
-            /*
-            for (int i = 0; i < 4; i++)
-            {
-                tab[j] = idealneCzasy[i];
-                j++;
-                tab[j] = srednieCzasy[i];
-                j++;
-                tab[j] = srednieStareCzasy[i];
-                j++;
-                tab[j] = pojazdy[i];
-                j++;
-                tab[j] = pojazdyStare[i];
-                j++;
-                tab[j] = czyOczekujeLewo[i];
-                j++;
-                tab[j] = czyOczekujeProsto[i];
-                j++;
-                tab[j] = czyOczekujePrawo[i];
-                j++;
-            }
-             */
-             /*
-            for (int i = 0; i < 6; i++)
-            {
-                tab[j] = odOstaniejZmianSwiatleNa[i];
-                j++;
-            }
-            */
-
-            /*
-            for (int i = 0; i < 4; i++)
-            {
-                tab[j] += opoxnienieSasaiada[i];
-                j++;
-            }
-            */
-
-            return tab;
-        }
+        
         public double[] TablicaWyjscia()
         {
             return wyjscie;
         }
 
-
-        /* DANE WEJSCIOWE
-         * 
-         * Dane odcinka wejsciowego skryżowania x 4     = 32
-         * - idealny czas odcinka
-         * - średni czas odcinka przez ostatnia godzine
-         * - średni czas odcinka dla tej godziny poprzedniego dnia
-         * - ilość pojazdów na odcinku
-         * - średni czas odcinka dla tej godziny poprzedniego dnia
-         * - czy coś na kierunku [0, 1] x 3     (lewo prosto prawo)
-         * 
-         * Czas od zmiany na pozycje swiatel x 6
-         * 
-         * Dane sasiadow x 4                = 4
-         * - suma znormalizowanych opoxnien
-         * 
-         * RAZEM 42
-         */
-
         public void NormalizujWejscie()
         {
-
-
             //NORMALIZACJA DROG DOCHODZACY DO SKRZYZOWANIA
             double idMax = idealneCzasy.Max();
             double poMax = pojazdy.Max();
