@@ -31,6 +31,8 @@ namespace SterowanieRuchem
 
             this.trasa = new Trasa(trasa);
             this.bazaDanych = bazaDanych;
+
+            bazaDanych.ZajerejstrujWjazd(rejestracja, trasa.trasa[0], trasa.trasa[1]);
             czyJedzie = true;
         }
 

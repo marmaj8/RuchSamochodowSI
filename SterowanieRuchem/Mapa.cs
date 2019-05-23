@@ -8,11 +8,13 @@ namespace SterowanieRuchem
 {
     class Mapa
     {
-        public List<Skrzyzowanie> skrzyzowania { get; set; }
+        public List<Skrzyzowanie> skrzyzowania { get; set; }        // lista skrzyzowan
+        List<Trasa> zapisaneTrasy;                                  // znalezione optymalne trasy
 
         public Mapa()
         {
             skrzyzowania = new List<Skrzyzowanie>();
+            zapisaneTrasy = new List<Trasa>();
         }
 
         public Mapa(Mapa mapa)
@@ -113,9 +115,9 @@ namespace SterowanieRuchem
 
             psy = new List<PasRuchu> {
                 new PasRuchu(1, 31, 2, 0, new List<int> { 8, 4, 6}, new List<int> { 1, 2, 3}, 20),
-                new PasRuchu(1, 33, 8, 1, new List<int> { 4, 6, 1}, new List<int> { 2, 3, 0}, 20),
+                new PasRuchu(1, 33, 8, 1, new List<int> { 4, 6, 2}, new List<int> { 2, 3, 0}, 20),
                 new PasRuchu(1, 32, 4, 3, new List<int> { 6, 2, 8}, new List<int> { 3, 0, 1}, 20),
-                new PasRuchu(1, 29, 6, 3, new List<int> { 2, 8, 3}, new List<int> { 0, 1, 2}, 20),
+                new PasRuchu(1, 29, 6, 3, new List<int> { 2, 8, 4}, new List<int> { 0, 1, 2}, 20),
             };
             sk = new Skrzyzowanie(3, psy, sw, sr, sr);
             DodajSkrzyzowanie(sk);
@@ -280,54 +282,90 @@ namespace SterowanieRuchem
             skrzyzowania.Add(skrzyzowanie);
         }
 
-        public void MapaZPliku(string plik)
+        // przeszukanie zapisanych tras w celu znalezienia odpowiedniej
+        private Trasa ZapisanaTrasa(int poczatek, int koniec)
         {
-
+            //return null;
+            foreach (Trasa t in zapisaneTrasy)
+            {
+                if (t.trasa.First() == poczatek && t.trasa.Last() == koniec)
+                    return t;
+            }
+            return null;
         }
-
+        
         public Trasa PodajTrase(int poczatek, int koniec)
         {
-            List<Trasa> trasy = new List<Trasa>();
-            foreach (int kierunek in skrzyzowania.Find(s => s.PodajId() == poczatek).PodajKierunki())
+            // sprawdzenie czy wyznaczylismy juz taka trase
+            Trasa trasa = ZapisanaTrasa(poczatek, koniec);
+            if (trasa != null)
+                return trasa;
+
+            List<Trasa> mozliwe = new List<Trasa>();
+            trasa = new Trasa(poczatek);
+
+            List<int> koszty = new List<int>();
+
+            Skrzyzowanie sk = skrzyzowania.First(s => s.PodajId() == poczatek);
+            foreach(int kierunek in sk.PodajKierunki())
             {
-                Trasa temp = PodajTrase(poczatek, kierunek, koniec, new Trasa(poczatek));
-                if (temp != null)
-                    trasy.Add(temp);
+                if (kierunek != -1)
+                {
+                    Trasa tmp = PodajTrase(trasa, poczatek, kierunek, koniec, koszty);
+                    if (tmp != null)
+                        mozliwe.Add(tmp);
+                }
             }
 
-            if (trasy.Count() > 0)
+
+            if (mozliwe.Count() > 0)
             {
-                return trasy.OrderBy(t => t.koszt).First();
+                Trasa tmp = mozliwe.OrderBy(m => m.koszt).First();
+                zapisaneTrasy.Add(tmp);
+                return tmp;
             }
 
             return null;
         }
 
-        public Trasa PodajTrase(int skad, int poczatek, int koniec, Trasa trasa)
+        public Trasa PodajTrase(Trasa trasaPoczatkowa, int skad, int przez, int koniec, List<int> koszty)
         {
-            trasa.DodajSkrzyzowanie(poczatek, skrzyzowania.Find(s => s.PodajId() == poczatek).WagaOdcinka(skad));
-
-            if (trasa.trasa.Last() == koniec)
+            Trasa trasa = new Trasa(trasaPoczatkowa);
+            Skrzyzowanie sk = skrzyzowania.First(s => s.PodajId() == przez);
+            trasa.DodajSkrzyzowanie(przez, sk.WagaOdcinka(skad));
+            // jestli to koneic trasy
+            if (przez == koniec)
+            {
+                koszty.Add( (int)trasa.koszt);
                 return trasa;
+            }
+            // jesli znaleziono szybsza trase kasujemy
+            if (koszty.Count() > 0 && trasa.koszt > koszty.Min())
+                return null;
+            // jesli trasa jest cyklem trase kasujemy
             if (trasa.CzyCykl())
                 return null;
+            
+            List<Trasa> mozliwe = new List<Trasa>();
 
-
-            List<Trasa> trasy = new List<Trasa>();
-            List<int> kierunki = skrzyzowania.Find(s => s.PodajId() == poczatek).PodajKierunki(skad);
-
-            foreach (int kierunek in kierunki)
+            
+            foreach (int kierunek in sk.PodajKierunki())
             {
-                Trasa temp = PodajTrase(poczatek, kierunek, koniec, new Trasa(trasa));
-                if (temp != null)
-                    trasy.Add(temp);
+                if (kierunek != -1)
+                {
+                    Trasa tmp = PodajTrase(trasa, przez, kierunek, koniec, koszty);
+                    if (tmp != null)
+                        mozliwe.Add(tmp);
+                }
             }
 
-            if (trasy.Count() > 0)
+            
+            if (mozliwe.Count() > 0)
             {
-                return trasy.OrderBy(t => t.koszt).First();
+                Trasa tmp = mozliwe.OrderBy(m => m.koszt).First();
+                koszty.Add( (int)tmp.koszt);
+                return tmp;
             }
-
             return null;
         }
 
@@ -343,7 +381,91 @@ namespace SterowanieRuchem
             return numery.ToList();
         }
 
-        public List<Trasa> GenerujTrasy(int godzina, double mnoznik = 3600.0, double maxOdchyl = 0.2)
+
+        private List<int> WielkosciGenerowanegoRuchu(int godzina)
+        {
+            List<int> tab = new List<int>();
+
+            foreach(Skrzyzowanie sk in skrzyzowania)
+            {
+                tab.Add(sk.WagaGenerowanegoRuchu(godzina));
+            }
+            return tab;
+        }
+        private List<int> WielkosciKasowanegoRuchu(int godzina)
+        {
+            List<int> tab = new List<int>();
+
+            foreach (Skrzyzowanie sk in skrzyzowania)
+            {
+                tab.Add(sk.WagaUsuwanegoRuchu(godzina));
+            }
+            return tab;
+        }
+
+        public List<Trasa> GenerujTrasy(int godzina, double mnoznik = 10, double maxOdchyl = 0.2)
+        {
+            Random rand = new Random();
+            List<Trasa> trasy = new List<Trasa>();
+            List<int> generowane = WielkosciGenerowanegoRuchu(godzina);
+            List<int> kasowane = WielkosciKasowanegoRuchu(godzina);
+            int gen = generowane.Sum();
+            int kas = kasowane.Sum();
+            int ile = (int)(gen * mnoznik * (1 - (rand.NextDouble() - 0.5) * 2 * maxOdchyl ));
+            int start;
+            int koniec;
+            int sum;
+            int i;
+
+            while(ile > 0)
+            {
+                // LOSOWANIE WARTOSCI POCZATKA I KONCA
+                start = rand.Next(gen);
+                koniec = rand.Next(kas);
+
+                // ZNALEZIENIE POCZATKA I KONCA
+                // O WYLOSOWANEJ WARTOSCI
+                sum = 0;
+                i = 0;
+                foreach(int g in generowane)
+                {
+                    sum += g;
+                    if (start < sum)
+                    {
+                        start = skrzyzowania[i].id;
+                        break;
+                    }
+                    i++;
+                }
+                sum = 0;
+                i = 0;
+                foreach (int k in kasowane)
+                {
+                    sum += k;
+                    if (koniec < sum)
+                    {
+                        koniec = skrzyzowania[i].id;
+                        break;
+                    }
+                    i++;
+                }
+
+                if (start != koniec)
+                {
+                    Trasa tmp = PodajTrase(start, koniec);
+
+                    if (tmp.trasa.Count() > 2)
+                    {
+                        trasy.Add(tmp);
+                        ile--;
+                    }
+                }
+            }
+
+            return trasy;
+        }
+
+        public List<Trasa> xxxxxxGenerujTrasy(int godzina, double mnoznik = 3600.0, double maxOdchyl = 0.2)
         {
             List<Trasa> trasy = new List<Trasa>();
             List<int> numery = new List<int>();
@@ -399,8 +521,8 @@ namespace SterowanieRuchem
                 }
                 if (start != koniec)
                 {
-                    //tmp = PodajTrase(start, koniec);
-                    tmp = LosujSztywnaTrase();
+                    tmp = PodajTrase(start, koniec);
+                    //tmp = LosujSztywnaTrase();
                     if (tmp.trasa.Count() > 2)
                     {
                         trasy.Add(tmp);

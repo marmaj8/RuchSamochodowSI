@@ -14,6 +14,11 @@ namespace SterowanieRuchem
         public List<int> trasa { get; private set; }
         public double koszt { get; private set; }
 
+        public Trasa()
+        {
+            trasa = new List<int>();
+            koszt = 0;
+        }
         public Trasa(int start)
         {
             trasa = new List<int> { start };

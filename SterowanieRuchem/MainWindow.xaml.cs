@@ -91,13 +91,13 @@ namespace SterowanieRuchem
 
             ZmienKolumne();
 
-            lbPojazdow.Content = "Pojazdow: " + Pojazd.nastepnaRejestracja;
+            lbPojazdow.Content = "Pojazdow: " + emul.Pojazdy;
         }
 
         private void Button_Wczytaj_Mape(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Mapy Skrzyżowań (*.jsonMap)|*.jsonMap|All files (*.*)|*.*";
+            openFileDialog.Filter = "Mapy Skrzyżowań (*.jsonMap)|*.jsonMap|Plik JSON (*.json)|*.json|All files (*.*)|*.*";
             if (openFileDialog.ShowDialog() == true)
             {
                 emul.ZaladujMapeZPliku(openFileDialog.FileName);
@@ -188,7 +188,7 @@ namespace SterowanieRuchem
         {
             dane = emul.AktualizujDaneDoWyswieltenia(dane);
 
-            lbPojazdow.Content = "Pojazdow: " + Pojazd.nastepnaRejestracja;
+            lbPojazdow.Content = "Pojazdow: " + emul.Pojazdy;
             if (!pracuj)
             {
                 btnStart.IsEnabled = true;

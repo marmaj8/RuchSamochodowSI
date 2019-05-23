@@ -21,7 +21,7 @@ namespace SterowanieRuchem
         DaneORuchu daneORuchuKontrolne; // dane o zajerejstrowanym ruchu podczas symuylacji kontrolnej
         SterowanieSi si;                // moduł sztucznej inteligencji do sterowania ruchem
 
-        public int Pojazdy { get; set; } = 0;   // laczna ilosc pojazdow wprowadzonych do ruchu
+        public int Pojazdy { get; private set; } = 0;   // laczna ilosc pojazdow wprowadzonych do ruchu
 
         Boolean trybKontrolny;              // true - 2 symulacje, false - 1 symulaja
 
@@ -99,9 +99,76 @@ namespace SterowanieRuchem
         {
             trybKontrolny = tryb;
         }
-        
+
         // emulacja ruchu trwajaca 1 godzine
         public void EmulacjaGodziny()
+        {
+            int godzina = czas.godzin;
+            List<Trasa> trasy = mapa.GenerujTrasy(godzina);
+            double pps = trasy.Count() / 3600;
+            int odstep;
+            int ile;
+            int minelo = 0;
+
+            if (pps >= 1)
+            {
+                odstep = 1;
+                ile = (int)pps;
+            }
+            else
+            {
+                odstep = (int) (1 / pps);
+                ile = 1;
+            }
+
+            while (czas.godzin == godzina)
+            {
+                if (trybKontrolny)
+                    kontrolna.Symuluj();
+                symulacja.Symuluj();
+
+                if(minelo >= odstep)
+                {
+                    for(int i = 0; i < ile; i++)
+                    {
+                        if (trasy.Count() > 0)
+                        {
+                            Pojazdy++;
+
+                            if (trybKontrolny)
+                                kontrolna.GenerujPojazd(trasy.First());
+                            symulacja.GenerujPojazd(trasy.First());
+
+                            trasy.RemoveAt(0);
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                    minelo = 0;
+                }
+                else
+                {
+                    minelo++;
+                }
+                daneORuchu.UsunStare();
+                daneORuchuKontrolne.UsunStare();
+
+                czas.UplywCzasu();
+            }
+
+            daneORuchu.ArchiwizujAktualne();
+            daneORuchuKontrolne.ArchiwizujAktualne();
+
+            if (trybKontrolny)
+                si.UczZKontrolnymi(daneORuchuKontrolne, czas);
+            else
+                si.UczZPoprzedniaDoba(daneORuchu);
+        }
+
+        // emulacja ruchu trwajaca 1 godzine
+        public void xxxEmulacjaGodziny()
         {
             int godzina = czas.godzin;
             
