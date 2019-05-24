@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SterowanieRuchem
 {
@@ -19,6 +17,7 @@ namespace SterowanieRuchem
 
         public Mapa(Mapa mapa)
         {
+            zapisaneTrasy = new List<Trasa>();
             skrzyzowania = new List<Skrzyzowanie>();
             foreach ( Skrzyzowanie sk in mapa.skrzyzowania)
             {
@@ -168,6 +167,7 @@ namespace SterowanieRuchem
             DodajSkrzyzowanie(sk);
         }
 
+        /*
         public Trasa LosujSztywnaTrase()
         {
             List<Trasa> trasy = new List<Trasa>();
@@ -276,6 +276,7 @@ namespace SterowanieRuchem
 
             return trasy[rand.Next() % trasy.Count()];
         }
+        */
 
         public void DodajSkrzyzowanie(Skrzyzowanie skrzyzowanie)
         {
@@ -328,7 +329,7 @@ namespace SterowanieRuchem
             return null;
         }
 
-        public Trasa PodajTrase(Trasa trasaPoczatkowa, int skad, int przez, int koniec, List<int> koszty)
+        private Trasa PodajTrase(Trasa trasaPoczatkowa, int skad, int przez, int koniec, List<int> koszty)
         {
             Trasa trasa = new Trasa(trasaPoczatkowa);
             Skrzyzowanie sk = skrzyzowania.First(s => s.PodajId() == przez);
@@ -465,75 +466,7 @@ namespace SterowanieRuchem
             return trasy;
         }
 
-        public List<Trasa> xxxxxxGenerujTrasy(int godzina, double mnoznik = 3600.0, double maxOdchyl = 0.2)
-        {
-            List<Trasa> trasy = new List<Trasa>();
-            List<int> numery = new List<int>();
-            List<double> wagiZrodel = new List<double>();
-            List<double> wagiCelow = new List<double>();
-
-            double ruch = 0;
-            int usuwane = 0;
-            int start, koniec;
-            double ile;
-
-
-            Random rand = new Random();
-            double los1, los2;
-            double odchyl = 1 + (rand.NextDouble() * 2 - 1) * maxOdchyl;
-
-            foreach (Skrzyzowanie sk in skrzyzowania)
-            {
-                ruch += sk.WagaGenerowanegoRuchu(godzina);
-                usuwane += sk.WagaUsuwanegoRuchu(godzina);
-                numery.Add(sk.PodajId());
-                wagiCelow.Add(usuwane);
-                wagiZrodel.Add(ruch);
-            }
-
-            //ile = ((ruch * odchyl / mnoznik) / rand.NextDouble());
-            ile = rand.Next(2);
-
-
-            while (ile >= 1)
-            {
-                Trasa tmp;
-                start = numery[0];
-                koniec = numery[0];
-                los1 = rand.NextDouble() * ruch / mnoznik;
-                los2 = rand.NextDouble() * usuwane;
-
-                for (int j = numery.Count() - 1; j >= 0; j--)
-                {
-                    if (wagiZrodel[j] < los1)
-                    {
-                        start = numery[j];
-                        break;
-                    }
-                }
-                for (int j = numery.Count() - 1; j >= 0; j--)
-                {
-                    if (wagiCelow[j] < los2)
-                    {
-                        koniec = numery[j];
-                        break;
-                    }
-                }
-                if (start != koniec)
-                {
-                    tmp = PodajTrase(start, koniec);
-                    //tmp = LosujSztywnaTrase();
-                    if (tmp.trasa.Count() > 2)
-                    {
-                        trasy.Add(tmp);
-                        ile--;
-                    }
-                }
-            }
-
-            return trasy;
-        }
-
+        
         public void RuchSkrzyzowan()
         {
             foreach (Skrzyzowanie skrzyzowanie in skrzyzowania)
@@ -546,7 +479,7 @@ namespace SterowanieRuchem
         {
             foreach (Skrzyzowanie skrzyzowanie in skrzyzowania)
             {
-                if (skrzyzowanie.CzySi() && skrzyzowanie.PodajKiedyOstatniaZmianaSwiatel() >= SterowanieSi.CO_ILE_ZMIAN_SWIATEL)
+                if (skrzyzowanie.CzySi() && skrzyzowanie.PodajKiedyOstatniaZmianaSwiatel() >= SterowanieSi.CO_ILE_ZMIANA_SWIATEL)
                 {
                     skrzyzowanie.UstawSchematSi( si.GenSchemat(skrzyzowanie.PodajId(), this, baza, bazaKontrolna, czas) );
                 }

@@ -3,8 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SterowanieRuchem
 {
@@ -45,7 +43,7 @@ namespace SterowanieRuchem
             daneORuchu = new DaneORuchu(czas);
             daneORuchuKontrolne = new DaneORuchu(czas);
 
-            symulacja = new Symulacja(czas, daneORuchu, daneORuchu, mapa, si);
+            symulacja = new Symulacja(czas, daneORuchu, daneORuchuKontrolne, mapa, si);
             kontrolna = new Symulacja(czas, daneORuchuKontrolne, daneORuchuKontrolne, mapa);
 
             mapa.PrzekazListePolaczenDoBazy(daneORuchu);
@@ -65,7 +63,7 @@ namespace SterowanieRuchem
             daneORuchu = new DaneORuchu(czas);
             daneORuchuKontrolne = new DaneORuchu(czas);
 
-            symulacja = new Symulacja(czas, daneORuchu, daneORuchu, mapa, si);
+            symulacja = new Symulacja(czas, daneORuchu, daneORuchuKontrolne, mapa, si);
             kontrolna = new Symulacja(czas, daneORuchuKontrolne, daneORuchuKontrolne, mapa);
 
             mapa.PrzekazListePolaczenDoBazy(daneORuchu);
@@ -103,7 +101,7 @@ namespace SterowanieRuchem
         // emulacja ruchu trwajaca 1 godzine
         public void EmulacjaGodziny()
         {
-            int godzina = czas.godzin;
+            int godzina = czas.godziny;
             List<Trasa> trasy = mapa.GenerujTrasy(godzina);
             double pps = trasy.Count() / 3600;
             int odstep;
@@ -121,7 +119,7 @@ namespace SterowanieRuchem
                 ile = 1;
             }
 
-            while (czas.godzin == godzina)
+            while (czas.godziny == godzina)
             {
                 if (trybKontrolny)
                     kontrolna.Symuluj();
@@ -151,40 +149,6 @@ namespace SterowanieRuchem
                 else
                 {
                     minelo++;
-                }
-                daneORuchu.UsunStare();
-                daneORuchuKontrolne.UsunStare();
-
-                czas.UplywCzasu();
-            }
-
-            daneORuchu.ArchiwizujAktualne();
-            daneORuchuKontrolne.ArchiwizujAktualne();
-
-            if (trybKontrolny)
-                si.UczZKontrolnymi(daneORuchuKontrolne, czas);
-            else
-                si.UczZPoprzedniaDoba(daneORuchu);
-        }
-
-        // emulacja ruchu trwajaca 1 godzine
-        public void xxxEmulacjaGodziny()
-        {
-            int godzina = czas.godzin;
-            
-            while (czas.godzin == godzina)
-            {
-                if (trybKontrolny)
-                    kontrolna.Symuluj();
-                symulacja.Symuluj();
-
-                List<Trasa> trasy = mapa.GenerujTrasy(godzina);
-                foreach (Trasa trasa in trasy)
-                {
-                    Pojazdy++;
-                    if (trybKontrolny)
-                        kontrolna.GenerujPojazd(trasa);
-                    symulacja.GenerujPojazd(trasa);
                 }
                 daneORuchu.UsunStare();
                 daneORuchuKontrolne.UsunStare();

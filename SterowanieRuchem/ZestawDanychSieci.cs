@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SterowanieRuchem
 {
@@ -55,8 +52,8 @@ namespace SterowanieRuchem
 
         public void UstawDanePasa(int nr, double idealny, double srednia, double sredniaSt, double ile, double ileSt, Boolean lewo, Boolean prosto, Boolean prawo)
         {
-            sumaSrednichStarych -= srednieStareCzasy[nr];
-            sumaSrednichStarych += sredniaSt;
+            sumaSrednichStarych -= srednieCzasy[nr];
+            sumaSrednichStarych += srednia;
 
             idealneCzasy[nr] = idealny;
             srednieCzasy[nr] = srednia;
@@ -112,7 +109,9 @@ namespace SterowanieRuchem
         // i przeliczenie wyjscia w celu nauki
         public void SprawdxPoprawnosc(double srednia)
         {
-            if (srednia <= sumaSrednichStarych)
+            if (sumaSrednichStarych <= 0)
+                return;
+            if (srednia >= sumaSrednichStarych && srednia <= sumaSrednichStarych * 4)
                 WzmocnijWyjscie();
             else
                 ZanegujWyjscie();

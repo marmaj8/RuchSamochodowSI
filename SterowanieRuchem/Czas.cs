@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SterowanieRuchem
+﻿namespace SterowanieRuchem
 {
     /*
      * Przetrzymywanie i obsługa upływu czasu
@@ -12,60 +6,60 @@ namespace SterowanieRuchem
      */
     class Czas
     {
-        public int sekund { get; set; }
-        public int minut { get; set; }
-        public int godzin { get; set; }
+        public int sekundy { get; set; }
+        public int minuty { get; set; }
+        public int godziny { get; set; }
 
         public Czas(int s =0, int m = 0, int h = 0)
         {
-            sekund = s;
-            minut = m;
-            godzin = h;
+            sekundy = s;
+            minuty = m;
+            godziny = h;
 
             PoprawZapis();
         }
 
         public Czas(Czas c)
         {
-            sekund = c.sekund;
-            minut = c.minut;
-            godzin = c.godzin;
+            sekundy = c.sekundy;
+            minuty = c.minuty;
+            godziny = c.godziny;
         }
 
         private void PoprawZapis()
         {
-            if (sekund >= 60)
+            if (sekundy >= 60)
             {
-                int tmp = sekund;
-                sekund = tmp % 60;
+                int tmp = sekundy;
+                sekundy = tmp % 60;
 
-                minut += tmp / 60;
+                minuty += tmp / 60;
             }
-            if (minut >= 60)
+            if (minuty >= 60)
             {
-                int tmp = minut;
-                minut = tmp % 60;
+                int tmp = minuty;
+                minuty = tmp % 60;
 
-                godzin += tmp / 60;
+                godziny += tmp / 60;
             }
-            if (godzin >= 24)
+            if (godziny >= 24)
             {
-                godzin = godzin % 24;
+                godziny = godziny % 24;
             }
         }
 
         public void UplywCzasu(int s = 1, int m = 0, int g = 0)
         {
-            sekund += s;
-            minut += m;
-            godzin += g;
+            sekundy += s;
+            minuty += m;
+            godziny += g;
 
             PoprawZapis();
         }
 
         public int PodajWSekundach()
         {
-            return (godzin * 60 + minut) * 60 + sekund;
+            return (godziny * 60 + minuty) * 60 + sekundy;
         }
         
         public static int RoznicaWSekundach(Czas t1, Czas t2)

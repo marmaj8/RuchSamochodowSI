@@ -1,21 +1,10 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace SterowanieRuchem
 {
@@ -24,7 +13,7 @@ namespace SterowanieRuchem
     /// </summary>
     public partial class MainWindow : Window
     {
-        Emulator emul;
+        Emulator emulator;
         List<DaneDoWyswietlenia> dane;
         BackgroundWorker wTle;
         Boolean pracuj;
@@ -33,12 +22,12 @@ namespace SterowanieRuchem
 
         public MainWindow()
         {
-            emul = new Emulator();
-            emul.UstawTrybKontrolny(true);
-            emul.EmulatorTestowy();
+            emulator = new Emulator();
+            emulator.UstawTrybKontrolny(true);
+            emulator.EmulatorTestowy();
 
             //List<DaneDoWyswietlenia> dane = emul.PrzygotujDaneDoWyswieltenia();
-            dane = emul.PrzygotujDaneDoWyswieltenia();
+            dane = emulator.PrzygotujDaneDoWyswieltenia();
 
             InitializeComponent();
 
@@ -82,16 +71,16 @@ namespace SterowanieRuchem
         }
         private void Button_Krok(object sender, RoutedEventArgs e)
         {
-            emul.EmulacjaGodziny();
+            emulator.EmulacjaGodziny();
             //List<DaneDoWyswietlenia> dane = emul.PrzygotujDaneDoWyswieltenia();
-            dane = emul.AktualizujDaneDoWyswieltenia(dane);
+            dane = emulator.AktualizujDaneDoWyswieltenia(dane);
 
             wyniki.ItemsSource = dane;
             wyniki.Items.Refresh();
 
             ZmienKolumne();
 
-            lbPojazdow.Content = "Pojazdow: " + emul.Pojazdy;
+            lbPojazdow.Content = "Pojazdow: " + emulator.Pojazdy;
         }
 
         private void Button_Wczytaj_Mape(object sender, RoutedEventArgs e)
@@ -100,8 +89,8 @@ namespace SterowanieRuchem
             openFileDialog.Filter = "Mapy Skrzyżowań (*.jsonMap)|*.jsonMap|Plik JSON (*.json)|*.json|All files (*.*)|*.*";
             if (openFileDialog.ShowDialog() == true)
             {
-                emul.ZaladujMapeZPliku(openFileDialog.FileName);
-                dane = emul.PrzygotujDaneDoWyswieltenia();
+                emulator.ZaladujMapeZPliku(openFileDialog.FileName);
+                dane = emulator.PrzygotujDaneDoWyswieltenia();
                 wyniki.ItemsSource = dane;
                 wyniki.Items.Refresh();
             }
@@ -114,7 +103,7 @@ namespace SterowanieRuchem
             openFileDialog.Filter = "Sieci Neuronowe (*.nnsi)|*.nnsi|All files (*.*)|*.*";
             if (openFileDialog.ShowDialog() == true)
             {
-                emul.ZaladujSi(openFileDialog.FileName);
+                emulator.ZaladujSi(openFileDialog.FileName);
             }
         }
 
@@ -124,7 +113,7 @@ namespace SterowanieRuchem
             saveFileDialog.Filter = "Sieci Neuronowe (*.nnsi)|*.nnsi";
             if (saveFileDialog.ShowDialog() == true)
             {
-                emul.ZapiszSi(saveFileDialog.FileName);
+                emulator.ZapiszSi(saveFileDialog.FileName);
             }
         }
 
@@ -139,7 +128,7 @@ namespace SterowanieRuchem
                     d.SI = true;
                 }
             }
-            emul.WlaczSi(koniec);
+            emulator.WlaczSi(koniec);
             wyniki.Items.Refresh();
         }
 
@@ -154,18 +143,18 @@ namespace SterowanieRuchem
                     d.SI = false;
                 }
             }
-            emul.WylaczSi(koniec);
+            emulator.WylaczSi(koniec);
             wyniki.Items.Refresh();
         }
 
         private void Tryb_Kontrolny_Check(object sender, RoutedEventArgs e)
         {
-            emul.UstawTrybKontrolny(true);
+            emulator.UstawTrybKontrolny(true);
         }
 
         private void Tryb_Kontrolny_Uncheck(object sender, RoutedEventArgs e)
         {
-            emul.UstawTrybKontrolny(false);
+            emulator.UstawTrybKontrolny(false);
         }
 
 
@@ -175,7 +164,7 @@ namespace SterowanieRuchem
             {
                 if (pracuj)
                 {
-                    emul.EmulacjaGodziny();
+                    emulator.EmulacjaGodziny();
                     zmieniono = true;
                 }
 
@@ -186,10 +175,10 @@ namespace SterowanieRuchem
 
         private void wTle_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            dane = emul.AktualizujDaneDoWyswieltenia(dane);
+            dane = emulator.AktualizujDaneDoWyswieltenia(dane);
 
-            lbPojazdow.Content = "Pojazdow: " + emul.Pojazdy;
-            if (!pracuj)
+            lbPojazdow.Content = "Pojazdow: " + emulator.Pojazdy;
+            if (!pracuj && !btnStart.IsEnabled)
             {
                 btnStart.IsEnabled = true;
                 btnStop.IsEnabled = false;

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SterowanieRuchem
 {
@@ -40,7 +38,7 @@ namespace SterowanieRuchem
             foreach( DaneORuchuOdcinka odcinek in aktualne)
             {
                 dane24.First(d => d.CzyOdcinek(odcinek.poczatek, odcinek.koniec))
-                    .Aktualizuj(czas.godzin, odcinek.PodajSredniCzas(), odcinek.PodajIlePojazdowWGodzine());
+                    .Aktualizuj(czas.godziny, odcinek.PodajSredniCzas(), odcinek.PodajIlePojazdowWGodzine());
             }
 
             /*
@@ -136,7 +134,7 @@ namespace SterowanieRuchem
         public double PodajSumeSrednichSkrzyzowania(int skrzyzwoanie, Czas czas)
         {
             double suma = 0;
-            int godzina = czas.godzin;
+            int godzina = czas.godziny;
             godzina--;
             if (godzina == -1)
                 godzina = 23;
@@ -189,7 +187,7 @@ namespace SterowanieRuchem
         // Dla trybu 2 symulacji
         public List<DaneDoWyswietlenia> AktualizujDaneDoWyswieltenia(List<DaneDoWyswietlenia> wyswietl, Boolean czyKontrolne)
         {
-            int godz = czas.godzin - 1;
+            int godz = czas.godziny - 1;
             if (godz == -1)
                 godz = 23;
             // aktualizacja danych
@@ -204,7 +202,7 @@ namespace SterowanieRuchem
         // Dla trybu 1 symulacji
         public List<DaneDoWyswietlenia> AktualizujDaneDoWyswieltenia(List<DaneDoWyswietlenia> wyswietl)
         {
-            int godz = czas.godzin - 1;
+            int godz = czas.godziny - 1;
             if (godz == -1)
                 godz = 23;
             // aktualizacja danych

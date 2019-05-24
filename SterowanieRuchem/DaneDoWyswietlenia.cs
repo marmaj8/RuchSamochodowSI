@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SterowanieRuchem
 {
@@ -12,6 +8,7 @@ namespace SterowanieRuchem
         public int Koniec { get; set; }
         public string Kierunek { get; } = "->";
         public Boolean SI { get; set; }
+        public string Separator { get; set; } = " ";
 
         public double[] srednie { get; set; }
         public double[] kontrolne { get; set; }
@@ -22,7 +19,7 @@ namespace SterowanieRuchem
         {
             srednie = new double[24];
             kontrolne = new double[24];
-            
+
             this.Poczatek = poczatek;
             this.Koniec = koniec;
             this.SI = si;

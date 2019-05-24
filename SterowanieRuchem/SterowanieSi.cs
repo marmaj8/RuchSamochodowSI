@@ -3,21 +3,19 @@ using AForge.Neuro.Learning;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SterowanieRuchem
 {
     class SterowanieSi
     {
-        //static double PROG_NAUKI = 0.1;    // dokladnosc wstepnego uczenia
-        static double PROG_NAUKI = 100;    // dokladnosc wstepnego uczenia
-        public static int CO_ILE_ZMIAN_SWIATEL = 30;
+        public static double PROG_NAUKI = 0.3;    // dokladnosc wstepnego uczenia
+        //public static double PROG_NAUKI = 100;    // dokladnosc wstepnego uczenia
+        public static int CO_ILE_ZMIANA_SWIATEL = 30;
         public static int WIELKOSC_WEJSCIE = 86;
         public static int WIELKOSC_UKRYTE = 46;
         public static int WIELKOSC_WYJSCIE = 6;
 
-        static double MAX_PRZEJSC_BEZ_ZMIANY = 100;
+        static double MAX_BEZ_ZMIANY = 100;
 
         ActivationNetwork siecNeuronowa;
         //BackPropagationLearning nauczyciel;
@@ -104,9 +102,9 @@ namespace SterowanieRuchem
             double[] czasy = new double[6];
             for(int i = 0; i < 6; i++)
             {
-                czasy[i] = CO_ILE_ZMIAN_SWIATEL * rand.Next(1,10);
+                czasy[i] = CO_ILE_ZMIANA_SWIATEL * rand.Next(1,10);
             }
-            double czMax = czasy.Max() + CO_ILE_ZMIAN_SWIATEL;
+            double czMax = czasy.Max() + CO_ILE_ZMIANA_SWIATEL;
             switch (pos)
             {
                 case 0:
@@ -411,9 +409,9 @@ namespace SterowanieRuchem
             double[] czasy = new double[6];
             for (int i = 0; i < 6; i++)
             {
-                czasy[i] = CO_ILE_ZMIAN_SWIATEL * rand.Next(1, 10);
+                czasy[i] = CO_ILE_ZMIANA_SWIATEL * rand.Next(1, 10);
             }
-            double czMax = czasy.Max() + CO_ILE_ZMIAN_SWIATEL;
+            double czMax = czasy.Max() + CO_ILE_ZMIANA_SWIATEL;
             switch (pos)
             {
                 case 0:
@@ -728,7 +726,7 @@ namespace SterowanieRuchem
                 }
                 else if (poprzedni_blad == blad)
                 {
-                    if (odZmiany >= MAX_PRZEJSC_BEZ_ZMIANY)
+                    if (odZmiany >= MAX_BEZ_ZMIANY)
                     {
                         czyUczyc = false;
                     }
@@ -766,9 +764,9 @@ namespace SterowanieRuchem
                         nrDrogiSkrzyzowania,
                         sk.CzasDojazdu(zrodlo),
                         baza.PodajSredniCzas(zrodlo, sk.PodajId()),
-                        kontrolne.PodajSredniCzas(zrodlo, sk.PodajId(), czas.godzin),
+                        kontrolne.PodajSredniCzas(zrodlo, sk.PodajId(), czas.godziny),
                         baza.PojazdowNaOdcinku(zrodlo, sk.PodajId()),
-                        kontrolne.PodajIlePojazdowWgodzine(zrodlo, sk.PodajId(), czas.godzin),
+                        kontrolne.PodajIlePojazdowWgodzine(zrodlo, sk.PodajId(), czas.godziny),
                         sk.CzyOczekujeWKierunku(zrodlo, 0),
                         sk.CzyOczekujeWKierunku(zrodlo, 1),
                         sk.CzyOczekujeWKierunku(zrodlo, 2)
@@ -828,7 +826,7 @@ namespace SterowanieRuchem
                                 nrSasiadaSkrzyzowania * 4 + nrDrogiSkrzyzowania,
                                 sa.CzasDojazdu(zr),
                                 baza.PodajSredniCzas(zr, saId),
-                                baza.PodajIlePojazdowWgodzine(zr, saId, czas.godzin)
+                                baza.PodajIlePojazdowWgodzine(zr, saId, czas.godziny)
                                 );
                         }
                         nrDrogiSkrzyzowania++;
@@ -897,6 +895,7 @@ namespace SterowanieRuchem
                 wyjscie.Add(zestaw.TablicaWyjscia());
             }
             ewolutor.RunEpoch(wejscie.ToArray(), wyjscie.ToArray());
+            zestawyUczace.Clear();
         }
 
         public void UczZPoprzedniaDoba(DaneORuchu baza)
@@ -913,6 +912,7 @@ namespace SterowanieRuchem
                 wyjscie.Add(zestaw.TablicaWyjscia());
             }
             ewolutor.RunEpoch(wejscie.ToArray(), wyjscie.ToArray());
+            zestawyUczace.Clear();
         }
     }
 }

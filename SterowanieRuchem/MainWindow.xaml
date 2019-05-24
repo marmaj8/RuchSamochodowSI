@@ -5,9 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SterowanieRuchem"
         mc:Ignorable="d"
-        Title="Emulator Ruchu" Height="805" Width="1109.15">
-    <Grid Margin="10,0">
-        <ListView Name ="wyniki" Height="Auto" Width="Auto" Margin="10,59,10,0" VerticalAlignment="Top">
+        FontStretch="ExtraExpanded"
+        FontSize="12"
+        Title="SterowanieRuchem" Height="750" Width="1109.15" Background="White">
+    <Grid Margin="10,0" >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="331*"/>
+            <ColumnDefinition Width="750*"/>
+        </Grid.ColumnDefinitions>
+        <ListView Name ="wyniki" Height="Auto" Width="Auto" Margin="100,9,10,0" VerticalAlignment="Top" FontSize="11" Grid.ColumnSpan="2" FontWeight="DemiBold">
             <ListView.View>
                 <GridView x:Name="tabela">
                     <GridViewColumn Header="s" Width="20" DisplayMemberBinding="{Binding Poczatek}" />
@@ -22,89 +28,127 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
+
+
+                    <GridViewColumn Header="|" Width="10" DisplayMemberBinding="{Binding Separator}"/>
+
+
                     <GridViewColumn Header="0" Width="40" DisplayMemberBinding="{Binding srednie[0]}" />
                     <GridViewColumn Header="1" Width="40" DisplayMemberBinding="{Binding kontrolne[0]}" />
+                    <GridViewColumn Header="|" Width="10" DisplayMemberBinding="{Binding Separator}"/>
 
                     <GridViewColumn Header="1" Width="40" DisplayMemberBinding="{Binding srednie[1]}" />
                     <GridViewColumn Header="2" Width="40" DisplayMemberBinding="{Binding kontrolne[1]}" />
+                    <GridViewColumn Header="|" Width="10" DisplayMemberBinding="{Binding Separator}"/>
 
                     <GridViewColumn Header="2" Width="40" DisplayMemberBinding="{Binding srednie[2]}" />
                     <GridViewColumn Header="3" Width="40" DisplayMemberBinding="{Binding kontrolne[2]}" />
+                    <GridViewColumn Header="|" Width="10" DisplayMemberBinding="{Binding Separator}"/>
 
                     <GridViewColumn Header="3" Width="40" DisplayMemberBinding="{Binding srednie[3]}" />
                     <GridViewColumn Header="4" Width="40" DisplayMemberBinding="{Binding kontrolne[3]}" />
+                    <GridViewColumn Header="|" Width="10" DisplayMemberBinding="{Binding Separator}"/>
 
                     <GridViewColumn Header="4" Width="40" DisplayMemberBinding="{Binding srednie[4]}" />
                     <GridViewColumn Header="5" Width="40" DisplayMemberBinding="{Binding kontrolne[4]}" />
+                    <GridViewColumn Header="|" Width="10" DisplayMemberBinding="{Binding Separator}"/>
 
                     <GridViewColumn Header="5" Width="40" DisplayMemberBinding="{Binding srednie[5]}" />
                     <GridViewColumn Header="6" Width="40" DisplayMemberBinding="{Binding kontrolne[5]}" />
+                    <GridViewColumn Header="|" Width="10" DisplayMemberBinding="{Binding Separator}"/>
 
                     <GridViewColumn Header="6" Width="40" DisplayMemberBinding="{Binding srednie[6]}" />
                     <GridViewColumn Header="7" Width="40" DisplayMemberBinding="{Binding kontrolne[6]}" />
+                    <GridViewColumn Header="|" Width="10" DisplayMemberBinding="{Binding Separator}"/>
 
                     <GridViewColumn Header="7" Width="40" DisplayMemberBinding="{Binding srednie[7]}" />
                     <GridViewColumn Header="8" Width="40" DisplayMemberBinding="{Binding kontrolne[7]}" />
+                    <GridViewColumn Header="|" Width="10" DisplayMemberBinding="{Binding Separator}"/>
 
                     <GridViewColumn Header="8" Width="40" DisplayMemberBinding="{Binding srednie[8]}" />
                     <GridViewColumn Header="9" Width="40" DisplayMemberBinding="{Binding kontrolne[8]}" />
+                    <GridViewColumn Header="|" Width="10" DisplayMemberBinding="{Binding Separator}"/>
 
                     <GridViewColumn Header="9" Width="40" DisplayMemberBinding="{Binding srednie[9]}" />
                     <GridViewColumn Header="10" Width="40" DisplayMemberBinding="{Binding kontrolne[9]}" />
+                    <GridViewColumn Header="|" Width="10" DisplayMemberBinding="{Binding Separator}"/>
 
                     <GridViewColumn Header="10" Width="40" DisplayMemberBinding="{Binding srednie[10]}" />
                     <GridViewColumn Header="11" Width="40" DisplayMemberBinding="{Binding kontrolne[10]}" />
+                    <GridViewColumn Header="|" Width="10" DisplayMemberBinding="{Binding Separator}"/>
 
                     <GridViewColumn Header="11" Width="40" DisplayMemberBinding="{Binding srednie[11]}" />
                     <GridViewColumn Header="12" Width="40" DisplayMemberBinding="{Binding kontrolne[11]}" />
+                    <GridViewColumn Header="|" Width="10" DisplayMemberBinding="{Binding Separator}"/>
 
                     <GridViewColumn Header="12" Width="40" DisplayMemberBinding="{Binding srednie[12]}" />
                     <GridViewColumn Header="13" Width="40" DisplayMemberBinding="{Binding kontrolne[12]}" />
+                    <GridViewColumn Header="|" Width="10" DisplayMemberBinding="{Binding Separator}"/>
 
                     <GridViewColumn Header="13" Width="40" DisplayMemberBinding="{Binding srednie[13]}" />
                     <GridViewColumn Header="14" Width="40" DisplayMemberBinding="{Binding kontrolne[13]}" />
+                    <GridViewColumn Header="|" Width="10" DisplayMemberBinding="{Binding Separator}"/>
 
                     <GridViewColumn Header="14" Width="40" DisplayMemberBinding="{Binding srednie[14]}" />
                     <GridViewColumn Header="15" Width="40" DisplayMemberBinding="{Binding kontrolne[14]}" />
+                    <GridViewColumn Header="|" Width="10" DisplayMemberBinding="{Binding Separator}"/>
 
                     <GridViewColumn Header="15" Width="40" DisplayMemberBinding="{Binding srednie[15]}" />
                     <GridViewColumn Header="16" Width="40" DisplayMemberBinding="{Binding kontrolne[15]}" />
+                    <GridViewColumn Header="|" Width="10" DisplayMemberBinding="{Binding Separator}"/>
 
                     <GridViewColumn Header="16" Width="40" DisplayMemberBinding="{Binding srednie[16]}" />
                     <GridViewColumn Header="17" Width="40" DisplayMemberBinding="{Binding kontrolne[16]}" />
+                    <GridViewColumn Header="|" Width="10" DisplayMemberBinding="{Binding Separator}"/>
 
                     <GridViewColumn Header="17" Width="40" DisplayMemberBinding="{Binding srednie[17]}" />
                     <GridViewColumn Header="18" Width="40" DisplayMemberBinding="{Binding kontrolne[17]}" />
+                    <GridViewColumn Header="|" Width="10" DisplayMemberBinding="{Binding Separator}"/>
 
                     <GridViewColumn Header="18" Width="40" DisplayMemberBinding="{Binding srednie[18]}" />
                     <GridViewColumn Header="19" Width="40" DisplayMemberBinding="{Binding kontrolne[18]}" />
+                    <GridViewColumn Header="|" Width="10" DisplayMemberBinding="{Binding Separator}"/>
 
                     <GridViewColumn Header="19" Width="40" DisplayMemberBinding="{Binding srednie[19]}" />
                     <GridViewColumn Header="20" Width="40" DisplayMemberBinding="{Binding kontrolne[19]}" />
+                    <GridViewColumn Header="|" Width="10" DisplayMemberBinding="{Binding Separator}"/>
 
                     <GridViewColumn Header="20" Width="40" DisplayMemberBinding="{Binding srednie[20]}" />
                     <GridViewColumn Header="21" Width="40" DisplayMemberBinding="{Binding kontrolne[20]}" />
+                    <GridViewColumn Header="|" Width="10" DisplayMemberBinding="{Binding Separator}"/>
 
                     <GridViewColumn Header="21" Width="40" DisplayMemberBinding="{Binding srednie[21]}" />
                     <GridViewColumn Header="22" Width="40" DisplayMemberBinding="{Binding kontrolne[21]}" />
+                    <GridViewColumn Header="|" Width="10" DisplayMemberBinding="{Binding Separator}"/>
 
                     <GridViewColumn Header="22" Width="40" DisplayMemberBinding="{Binding srednie[22]}" />
                     <GridViewColumn Header="23" Width="40" DisplayMemberBinding="{Binding kontrolne[22]}" />
+                    <GridViewColumn Header="|" Width="10" DisplayMemberBinding="{Binding Separator}"/>
 
                     <GridViewColumn Header="23" Width="40" DisplayMemberBinding="{Binding srednie[23]}" />
                     <GridViewColumn Header="24" Width="40" DisplayMemberBinding="{Binding kontrolne[23]}" />
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button Name="btnKrok"  Content="Krok" HorizontalAlignment="Left" Margin="10,32,0,0" VerticalAlignment="Top" Width="75" Click="Button_Krok"/>
-        <Label Name ="lbPojazdow" Content="Pojazdow: 0" HorizontalAlignment="Left" Margin="471,5,0,0" VerticalAlignment="Top" Width="138"/>
-        <Button Name="btnWczytajMape" Content="Wczytaj Mape" HorizontalAlignment="Left" Margin="501,32,0,0" VerticalAlignment="Top" Width="75" Click="Button_Wczytaj_Mape"/>
-        <Button Name="btnWczytajSi" Content="Wczytaj SI" HorizontalAlignment="Right" Margin="0,32,665,0" VerticalAlignment="Top" Width="75" Click="Button_Wczytaj_Si"/>
-        <Button Name="btnZapiszSi" Content="Zapisz SI" HorizontalAlignment="Left" Margin="421,32,0,0" VerticalAlignment="Top" Width="75" Click="Button_Zapisz_Si"/>
-        <Button Name="btnStart" Content="Start" HorizontalAlignment="Left" Margin="90,32,0,0" VerticalAlignment="Top" Width="75" Click="Button_Start" RenderTransformOrigin="-5.227,-5.364"/>
-        <Button Name="btnStop" Content="Stop" HorizontalAlignment="Left" Margin="170,32,0,0" VerticalAlignment="Top" Width="75" Click="Button_Stop"/>
+        <Button Name="btnKrok" Content="Krok" HorizontalAlignment="Left" Margin="5,25,0,0" VerticalAlignment="Top" Width="75" Click="Button_Krok"/>
+        <Label Name ="lbPojazdow" Content="Pojazdow: 0" HorizontalAlignment="Left" Margin="1,163,0,0" VerticalAlignment="Top" Width="121"/>
+        <Button Name="btnWczytajMape" Content="Wczytaj Mape" HorizontalAlignment="Left" Margin="5,244,0,0" VerticalAlignment="Top" Width="75" Click="Button_Wczytaj_Mape" FontSize="11"/>
+        <Button Name="btnWczytajSi" Content="Wczytaj SI" Margin="5,194,0,0" VerticalAlignment="Top" Height="20" Click="Button_Wczytaj_Si" HorizontalAlignment="Left" Width="75"/>
+        <Button Name="btnZapiszSi" Content="Zapisz SI" HorizontalAlignment="Left" Margin="5,219,0,0" VerticalAlignment="Top" Width="75" Click="Button_Zapisz_Si" Height="20"/>
+        <Button Name="btnStart" Content="Start" HorizontalAlignment="Left" Margin="5,50,0,0" VerticalAlignment="Top" Width="75" Click="Button_Start" RenderTransformOrigin="-5.227,-5.364"/>
+        <Button Name="btnStop" Content="Stop" HorizontalAlignment="Left" Margin="5,75,0,0" VerticalAlignment="Top" Width="75" Click="Button_Stop"/>
 
 
-        <CheckBox Name="chboxTryb" Content="Symulacja Kontrolna" HorizontalAlignment="Left" Margin="341,10,0,0" VerticalAlignment="Top" Checked="Tryb_Kontrolny_Check" Unchecked="Tryb_Kontrolny_Uncheck" IsChecked="True"/>
+        <CheckBox Name="chboxTryb" Content="Symulacja&#xD;&#xA;Kontrolna" HorizontalAlignment="Left" Margin="5,132,0,0" VerticalAlignment="Top" Checked="Tryb_Kontrolny_Check" Unchecked="Tryb_Kontrolny_Uncheck" IsChecked="True"/>
+        <GridSplitter HorizontalAlignment="Left" Height="50" Margin="41,87,0,0" VerticalAlignment="Top" Width="4" RenderTransformOrigin="0.5,0.5">
+            <GridSplitter.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="90"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </GridSplitter.RenderTransform>
+        </GridSplitter>
     </Grid>
 </Window>
